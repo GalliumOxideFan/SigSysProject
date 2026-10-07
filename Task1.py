@@ -21,29 +21,58 @@ H1 = ct.tf(num1, den1)
 H2 = ct.tf(num2, den2)
 H3 = ct.tf(num3, den3)
 
-plt.figure()
-out = ct.pole_zero_plot(H3)
-plt.show()
+# Poles plotting
+fig, axs = plt.subplots(1,3, figsize = (10,4))
 
+ct.pole_zero_plot(H1, ax=axs[0])
+ct.pole_zero_plot(H2, ax=axs[1])
+ct.pole_zero_plot(H3, ax=axs[2])
 
-y1, t1 = ct.matlab.impulse(H1)
-y2, t2 = ct.matlab.impulse(H2)
-y3, t3 = ct.matlab.impulse(H3)
+axs[0].set_title('H1')
 
-fig, axs = plt.subplots(1,3)
+axs[1].set_title('H2')
 
-axs[0,0].plot(t1,y1)
-axs[0,0].set_title('H1')
-
-axs[0,1].plot(t2,y2)
-axs[0,1].set_title('H2')
-
-axs[0,2].plot(t3,y3)
-axs[0,2].set_title('H3')
+axs[2].set_title('H3')
 
 for ax in axs.flat:
     ax.set_xlabel("t [s]")
     ax.grid(True)
 
 fig.tight_layout()
+plt.show()
+
+
+# Impulse response plot
+t1, y1 = ct.impulse_response(H1)
+t2, y2 = ct.impulse_response(H2)
+t3, y3 = ct.impulse_response(H3)
+
+fig, axs = plt.subplots(1,3,figsize = (10,4))
+
+axs[0].plot(t1,y1)
+axs[0].set_title('H1')
+
+axs[1].plot(t2,y2)
+axs[1].set_title('H2')
+
+axs[2].plot(t3,y3)
+axs[2].set_title('H3')
+
+for ax in axs.flat:
+    ax.set_xlabel("t [s]")
+    ax.grid(True)
+
+fig.tight_layout()
+plt.show()
+
+
+# Bode plots
+
+ct.bode_plot(H1)
+plt.show()
+
+ct.bode_plot(H2)
+plt.show()
+
+ct.bode_plot(H3)
 plt.show()
