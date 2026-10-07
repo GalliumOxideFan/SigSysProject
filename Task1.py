@@ -14,5 +14,28 @@ den = [1, R2/R3 * G/(R*C), (G/(R*C))**2]
 H3 = ct.tf(num, den)
 
 plt.figure()
-out = ct.pzplot(H3)
+out = ct.pole_zero_plot(H3)
+plt.show()
+
+
+y1, t1 = ct.matlab.impulse(H1)
+y2, t2 = ct.matlab.impulse(H2)
+y3, t3 = ct.matlab.impulse(H3)
+
+fig, axs = plt.subplots(1,3)
+
+axs[0,0].plot(t1,y1)
+axs[0,0].set_title('H1')
+
+axs[0,1].plot(t2,y2)
+axs[0,1].set_title('H2')
+
+axs[0,2].plot(t3,y3)
+axs[0,2].set_title('H3')
+
+for ax in axs.flat:
+    ax.set_xlabel("t [s]")
+    ax.grid(True)
+
+fig.tight_layout()
 plt.show()
