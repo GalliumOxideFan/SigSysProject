@@ -2,9 +2,9 @@ import numpy as np
 import control as ct
 import matplotlib.pyplot as plt
 
-G = 1 # Scales all axis, no shange in shape
+G = 150 # Scales all axis, no shange in shape
 R = 1 # Scales all axis, no shange in shape, opposite sacling to G
-R2R3 = 1 # R2/R3 Low large imaginary part of the poles compared to real values, a lot of oscillation in the impulse response. Also an amplification seen in the bode, where we have resonace. Opposite for high values. 
+R2R3 = 0.1 # R2/R3 Low large imaginary part of the poles compared to real values, a lot of oscillation in the impulse response. Also an amplification seen in the bode, where we have resonace. Opposite for high values. 
 C = 1 # Scales all axis, no shange in shape, opposite sacling to G
 
 num1 = [-1]
@@ -74,3 +74,27 @@ plt.show()
 
 ct.bode_plot(H3)
 plt.show()
+
+# Periodic signal
+
+def sawtooth(t):
+    return 50*t % 1
+
+T = np.linspace(0, 0.2, 1000)
+u = sawtooth(T)
+
+t_out, y = ct.forced_response(H1, T, u)
+
+fig, axs = plt.subplots(1,2,figsize = (10,4))
+axs[0].plot(T,u)
+axs[0].set_title('Input')
+
+axs[1].plot(t_out,y)
+axs[1].set_title('Output')
+
+for ax in axs.flat:
+    ax.grid(True)
+
+fig.tight_layout()
+plt.show()
+
