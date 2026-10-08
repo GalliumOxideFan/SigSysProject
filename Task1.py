@@ -2,9 +2,9 @@ import numpy as np
 import control as ct
 import matplotlib.pyplot as plt
 
-G = 1 # Scales all axis, no shange in shape
+G = 150 # Scales all axis, no shange in shape
 R = 1 # Scales all axis, no shange in shape, opposite sacling to G
-R2R3 = 1 # R2/R3 Low large imaginary part of the poles compared to real values, a lot of oscillation in the impulse response. Also an amplification seen in the bode, where we have resonace. Opposite for high values. 
+R2R3 = 0.1 # R2/R3 Low large imaginary part of the poles compared to real values, a lot of oscillation in the impulse response. Also an amplification seen in the bode, where we have resonace. Opposite for high values. 
 C = 1 # Scales all axis, no shange in shape, opposite sacling to G
 
 num1 = [-1]
@@ -16,9 +16,9 @@ den2 = [R*C/G, R2R3, G/R*C]
 num3 = [-1,0,0]
 den3 = [1, R2R3 * G/(R*C), (G/(R*C))**2]
 
-H1 = ct.tf(num1, den1)
-H2 = ct.tf(num2, den2)
-H3 = ct.tf(num3, den3)
+H1 = ct.tf(num1, den1) # Low pass
+H2 = ct.tf(num2, den2) # Band pass
+H3 = ct.tf(num3, den3) # High pass
 
 # Poles plotting
 fig, axs = plt.subplots(1,3, figsize = (10,4))
