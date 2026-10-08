@@ -4,11 +4,11 @@ import matplotlib.pyplot as plt
 from scipy import signal
 from scipy import fft
 
-Tmax = 0.05
+Tmax = 0.06
 fs = 24000
 
 def f(t):
-    return 0.5*np.sin(4000*2*np.pi*t) + 0.5*np.sin(17000*2*np.pi*t)
+    return np.sin(4000*2*np.pi*t) + 0.5*np.sin(17000*2*np.pi*t)
 
 num, den = signal.butter(12,2*np.pi*8000, btype='low', analog=True)
 
@@ -31,7 +31,7 @@ T, y = sampling(f, fs, Tmax)
 
 fft_result = np.fft.rfft(y)
 freq = np.fft.rfftfreq(len(T), 1/fs)
-plt.plot(freq/1000,np.abs(fft_result))
+plt.plot(freq/1000,np.abs(fft_result)/(fs*Tmax/2))
 plt.xlabel('Frequency [kHz]')
 plt.ylabel('Amplitude')
 # ct.bode_plot(H)
