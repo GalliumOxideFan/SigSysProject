@@ -80,7 +80,7 @@ plt.show()
 def sawtooth(t):
     return 50*t % 1
 
-T = np.linspace(0, 0.2, 1000)
+T = np.linspace(0, 0.5, 10000)
 u = sawtooth(T)
 
 t_out, y = ct.forced_response(H1, T, u)
