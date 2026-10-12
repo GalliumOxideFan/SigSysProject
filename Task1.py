@@ -16,9 +16,9 @@ den2 = [R*C/G, R2R3, G/R*C]
 num3 = [-1,0,0]
 den3 = [1, R2R3 * G/(R*C), (G/(R*C))**2]
 
-H1 = ct.tf(num1, den1) # Low pass
-H2 = ct.tf(num2, den2) # Band pass
-H3 = ct.tf(num3, den3) # High pass
+H1 = ct.tf(num1, den1) # Low pass filter transfer function
+H2 = ct.tf(num2, den2) # Band pass filter transfer function
+H3 = ct.tf(num3, den3) # High pass filter transfer function
 
 # Poles plotting
 fig, axs = plt.subplots(1,3, figsize = (10,4))
@@ -75,16 +75,19 @@ plt.show()
 ct.bode_plot(H3)
 plt.show()
 
+
+
 # Periodic signal
 
-def sawtooth(t):
-    return 50*t % 1
+def sawtooth(t, f): # f is frequency of the signal
+    return f*t % 1
 
 T = np.linspace(0, 0.5, 10000)
-u = sawtooth(T)
+u = sawtooth(T, 50) # get a 50 hz sawtooth signal
 
-t_out, y = ct.forced_response(H1, T, u)
+t_out, y = ct.forced_response(H1, T, u) # get the filtered signal, only a few of the terms of the fourier serie of the signal remain
 
+# Plot input and output signal
 fig, axs = plt.subplots(1,2,figsize = (10,4))
 axs[0].plot(T,u)
 axs[0].set_title('Input')
@@ -94,6 +97,8 @@ axs[1].set_title('Output')
 
 for ax in axs.flat:
     ax.grid(True)
+    ax.set_xlabel("t [s]")
+    ax.set_ylabel("U [V]")
 
 fig.tight_layout()
 plt.show()
